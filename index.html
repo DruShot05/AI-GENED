@@ -14,11 +14,11 @@
     h1 {
       font-size: 2.5rem;
     }
-    #score {
+    #score, #timer {
       font-size: 2rem;
       margin: 20px 0;
     }
-    #clickBtn {
+    #clickBtn, #restartBtn {
       padding: 20px 40px;
       font-size: 1.5rem;
       cursor: pointer;
@@ -26,8 +26,9 @@
       color: white;
       border: none;
       border-radius: 10px;
+      margin: 10px;
     }
-    #clickBtn:hover {
+    #clickBtn:hover, #restartBtn:hover {
       background-color: #45a049;
     }
   </style>
@@ -35,16 +36,53 @@
 <body>
   <h1>Click the Button!</h1>
   <div id="score">Score: 0</div>
+  <div id="timer">Time Left: 10s</div>
   <button id="clickBtn">Click Me!</button>
+  <button id="restartBtn">Restart</button>
 
   <script>
     let score = 0;
-    const scoreDisplay = document.getElementById('score');
-    const button = document.getElementById('clickBtn');
+    let timeLeft = 10;
+    let timer;
+    let gameRunning = false;
 
-    button.addEventListener('click', () => {
-      score++;
+    const scoreDisplay = document.getElementById('score');
+    const timerDisplay = document.getElementById('timer');
+    const clickButton = document.getElementById('clickBtn');
+    const restartButton = document.getElementById('restartBtn');
+
+    function startGame() {
+      if (gameRunning) return;
+      gameRunning = true;
+      score = 0;
+      timeLeft = 10;
       scoreDisplay.textContent = `Score: ${score}`;
+      timerDisplay.textContent = `Time Left: ${timeLeft}s`;
+
+      timer = setInterval(() => {
+        timeLeft--;
+        timerDisplay.textContent = `Time Left: ${timeLeft}s`;
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          gameRunning = false;
+          timerDisplay.textContent = `Time's up! Final Score: ${score}`;
+        }
+      }, 1000);
+    }
+
+    clickButton.addEventListener('click', () => {
+      if (gameRunning) {
+        score++;
+        scoreDisplay.textContent = `Score: ${score}`;
+      } else {
+        startGame();
+      }
+    });
+
+    restartButton.addEventListener('click', () => {
+      clearInterval(timer);
+      gameRunning = false;
+      startGame();
     });
   </script>
 </body>
