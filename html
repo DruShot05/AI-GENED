@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mini Click Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f0f8ff;
+      padding: 50px;
+    }
+    h1 {
+      font-size: 2.5rem;
+    }
+    #score {
+      font-size: 2rem;
+      margin: 20px 0;
+    }
+    #clickBtn {
+      padding: 20px 40px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 10px;
+    }
+    #clickBtn:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h1>Click the Button!</h1>
+  <div id="score">Score: 0</div>
+  <button id="clickBtn">Click Me!</button>
+
+  <script>
+    let score = 0;
+    const scoreDisplay = document.getElementById('score');
+    const button = document.getElementById('clickBtn');
+
+    button.addEventListener('click', () => {
+      score++;
+      scoreDisplay.textContent = `Score: ${score}`;
+    });
+  </script>
+</body>
+</html>
